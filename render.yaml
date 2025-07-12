@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: advanced-ner-suite
+    env: python
+    plan: free
+    buildCommand: |
+      pip install --upgrade pip
+      pip install -r requirements-render.txt
+      python -c "import spacy; spacy.cli.download('en_core_web_sm')" || echo "spaCy model already installed"
+    startCommand: streamlit run demo_all_features.py --server.port $PORT --server.address 0.0.0.0 --server.headless true --server.enableCORS false --server.enableXsrfProtection false
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.6
+      - key: STREAMLIT_SERVER_HEADLESS
+        value: true
+      - key: STREAMLIT_SERVER_ENABLE_CORS
+        value: false
+      - key: STREAMLIT_SERVER_ENABLE_XSRF_PROTECTION
+        value: false
