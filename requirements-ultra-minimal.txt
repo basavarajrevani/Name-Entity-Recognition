@@ -1,0 +1,4 @@
+# Ultra minimal requirements for Render
+streamlit==1.28.1
+spacy==3.7.2
+textblob==0.17.1
