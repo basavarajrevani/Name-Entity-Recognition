@@ -1,0 +1,20 @@
+# Minimal requirements for Render deployment
+# This file contains only essential dependencies
+
+# Core NLP
+spacy>=3.6.0
+textblob>=0.17.1
+
+# Web framework
+streamlit>=1.28.0
+
+# Data processing
+pandas>=2.0.0
+numpy>=1.24.0
+
+# Basic visualization
+plotly>=5.17.0
+
+# Utilities
+requests>=2.31.0
+langdetect>=1.0.9

@@ -259,42 +259,88 @@ def show_basic_ner_fallback():
 def show_ai_features():
     """AI-powered advanced features"""
     st.header("🧠 AI-Powered Features")
-    
-    feature = st.selectbox(
-        "Select AI Feature:",
-        [
-            "Knowledge Graph NER",
-            "Confidence Analysis",
-            "Entity Linking"
-        ]
-    )
-    
-    if feature == "Knowledge Graph NER":
-        try:
-            from knowledge_graph_ner import create_knowledge_graph_interface
-            create_knowledge_graph_interface()
-        except ImportError:
-            st.error("Knowledge Graph interface not available in this deployment")
-            st.info("This feature requires additional setup for production deployment.")
-    
-    elif feature == "Confidence Analysis":
-        try:
-            from confidence_analyzer import create_confidence_interface
-            create_confidence_interface()
-        except ImportError:
-            st.error("Confidence analyzer not available in this deployment")
-            st.info("This feature requires transformer models which may not be available in the free tier.")
-    
-    elif feature == "Entity Linking":
-        st.subheader("🔗 Entity Linking")
+
+    st.info("🚀 Advanced AI features are available in the full deployment. This demo shows core NER functionality.")
+
+    # Show what's available in full version
+    st.subheader("🌟 Available in Full Version:")
+
+    col1, col2 = st.columns(2)
+
+    with col1:
         st.markdown("""
-        Advanced entity linking with external knowledge bases:
-        
-        - **Wikidata Integration**: Link entities to real-world data
-        - **Confidence Scoring**: Measure linking accuracy
-        - **Disambiguation**: Handle ambiguous entities
-        - **Rich Metadata**: Get descriptions, images, coordinates
+        **🧠 Knowledge Graph NER**
+        - Real-world entity linking
+        - Wikidata integration
+        - Interactive network visualization
+        - Relationship discovery
         """)
+
+        st.markdown("""
+        **🎯 Confidence Analysis**
+        - Multi-model comparison
+        - Uncertainty quantification
+        - Context strength analysis
+        - Quality scoring
+        """)
+
+    with col2:
+        st.markdown("""
+        **🔗 Entity Linking**
+        - External knowledge bases
+        - Confidence scoring
+        - Entity disambiguation
+        - Rich metadata extraction
+        """)
+
+        st.markdown("""
+        **📊 Advanced Analytics**
+        - Network analysis
+        - Temporal patterns
+        - Sentiment mapping
+        - Export capabilities
+        """)
+
+    # Basic demo of what's possible
+    st.subheader("🎬 Quick Demo")
+    demo_text = st.text_area(
+        "Try basic NER analysis:",
+        value="Apple Inc. was founded by Steve Jobs in Cupertino, California.",
+        height=100
+    )
+
+    if st.button("🔍 Analyze") and demo_text:
+        show_basic_analysis(demo_text)
+
+def show_basic_analysis(text):
+    """Show basic NER analysis"""
+    try:
+        import spacy
+        from textblob import TextBlob
+
+        @st.cache_resource
+        def load_nlp():
+            return spacy.load('en_core_web_sm')
+
+        nlp = load_nlp()
+        doc = nlp(text)
+        blob = TextBlob(text)
+
+        col1, col2 = st.columns(2)
+
+        with col1:
+            st.write("**🏷️ Entities Found:**")
+            for ent in doc.ents:
+                st.write(f"• **{ent.text}** ({ent.label_})")
+
+        with col2:
+            st.write("**📊 Analysis:**")
+            st.write(f"• Words: {len([t for t in doc if not t.is_space])}")
+            st.write(f"• Entities: {len(doc.ents)}")
+            st.write(f"• Sentiment: {blob.sentiment.polarity:.2f}")
+
+    except Exception as e:
+        st.error(f"Analysis error: {e}")
 
 def show_collaboration_tools():
     """Collaboration and annotation tools"""
